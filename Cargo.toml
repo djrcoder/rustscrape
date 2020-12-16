@@ -4,6 +4,20 @@ version = "0.1.0"
 authors = ["djrcoder <djrcode@gmail.com>"]
 edition = "2018"
 
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+
 [dependencies]
+
+select = "*"
+scraper = "*"
+reqwest = { version = "0.10", features = ["json"] }
+tokio = { version = "0.2", features = ["full"] }
+
+
+[[bin]]
+name = "rust-scraper"
+path = "src/main.rs"
+
+
