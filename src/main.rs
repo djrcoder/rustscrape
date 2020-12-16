@@ -1,31 +1,22 @@
-// use std::collections::HashMap;
 use scraper::{Html, Selector};
-extern crate select;
-
-// fn main() {
-//     hacker_news("https://news.ycombinator.com");
-// }
-
+use reqwest;
 #[tokio::main]
 
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let body = reqwest::get("https://www.rust-lang.org")
+    let body = reqwest::get("https://news.ycombinator.com/")
         .await?
         .text()
         .await?;
 
-    // println!("body = {:?}", body);
-
     let html = body;
-
-    // println!("body = {:?}", html);
-
     let fragment = Html::parse_fragment(&html);
-    let selector = Selector::parse("li").unwrap();
+    let stories = Selector::parse(".storylink").unwrap();
 
-    for element in fragment.select(&selector) {
-        assert_eq!("li", element.value().name());
-        println!("test {:?}", element.html());
+   // loop the elements matching the css selector
+   for story in fragment.select(&stories) {
+        // grab the headline text and place into a vector
+        let story_txt = story.text().collect::<Vec<_>>();
+        println!("{:?}", story_txt);
     }
 
     Ok(())
